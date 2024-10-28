@@ -14,6 +14,11 @@
 
     --background-color: #242424;
     --text-color: rgba(255, 255, 255, 0.87);
+    --spacing-xs: 4px;
+    --spacing-s: 8px;
+    --spacing-m: 16px;
+    --spacing-l: 24px;
+    --spacing-xxl: 48px
 }
 
 body {

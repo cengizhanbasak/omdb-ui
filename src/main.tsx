@@ -5,10 +5,11 @@ import {
     RouterProvider
 } from "react-router-dom";
 
-import "./index.css";
 import App from "./App.tsx";
-import Catalog from "./pages/Catalog/Catalog.tsx";
-import Detail from "./pages/Detail/Detail.tsx";
+import Catalog from "./pages/Catalog";
+import Detail from "./pages/Detail";
+
+import "./index.css";
 
 const router = createBrowserRouter([
     {
@@ -26,7 +27,6 @@ const router = createBrowserRouter([
         ]
     }
 ]);
-
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
