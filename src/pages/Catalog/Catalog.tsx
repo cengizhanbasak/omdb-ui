@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 import DebouncedInput from "../../components/DebouncedInput";
 import { Entry, EntryType, searchEntries } from "../../data/api";
+import { filtersSelector, updateEntryType, updateKeyword, updatePage, updateYear } from "../../data/filtersSlice";
 
 import CatalogEntry from "./CatalogEntry";
 
 import "./Catalog.less";
-import { filtersSelector, updateEntryType, updateKeyword, updatePage, updateYear } from "../../data/filtersSlice";
 
 function Catalog() {
     const [entries, setEntries] = useState<Entry[]>([]);
@@ -70,6 +70,10 @@ function Catalog() {
         dispatch(updatePage(page - 1));
     }
 
+    function handlePageChange(e: ChangeEvent<HTMLSelectElement>) {
+        dispatch(updatePage(Number(e.target.value)));
+    }
+
     return (
         <div className="catalog">
             <div className="title">The Open Movie Database</div>
@@ -104,6 +108,11 @@ function Catalog() {
                             disabled={page === 1}>
                             Prev
                         </button>
+                        <select value={page} onChange={handlePageChange}>
+                            {[...Array(numOfPages).keys()].map(i => (
+                                <option title={`${i+1}`} value={i+1}>{i+1}</option>
+                            ))}
+                        </select>
                         <button
                             onClick={nextPage}
                             disabled={page === numOfPages}>
