@@ -1,6 +1,6 @@
 .catalogEntry {
     display: grid;
-    grid-template-columns: 80px 4fr minmax(40px, 1fr);
+    grid-template-columns: minmax(48px, 1fr) 4fr minmax(48px, 1fr);
     gap: var(--spacing-xs);
     padding: var(--spacing-s);
     border-radius: 8px;
@@ -11,13 +11,20 @@
         opacity: 0.8;
     }
 
-    .title {
-        font-weight: 500;
+    & > * {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    
+
+    .title {
+        font-weight: 500;
+    }
+
+    .id {
+        font-family: 'Courier New', Courier, monospace;
+    }
+
     .id, .year {
         color: var(--secondary-text-color)
     }

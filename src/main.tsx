@@ -4,8 +4,10 @@ import {
     createBrowserRouter,
     RouterProvider
 } from "react-router-dom";
+import { Provider as StoreProvider } from "react-redux";
 
-import App from "./App.tsx";
+import store from "./data/store";
+import App from "./App";
 import Catalog from "./pages/Catalog";
 import Detail from "./pages/Detail";
 
@@ -30,6 +32,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <RouterProvider router={router} />
+        <StoreProvider store={store}>
+            <RouterProvider router={router} />
+        </StoreProvider>
     </StrictMode>
 );

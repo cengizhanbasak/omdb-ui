@@ -1,4 +1,5 @@
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import DebouncedInput from "../../components/DebouncedInput";
 import { Entry, EntryType, searchEntries } from "../../data/api";
@@ -6,30 +7,29 @@ import { Entry, EntryType, searchEntries } from "../../data/api";
 import CatalogEntry from "./CatalogEntry";
 
 import "./Catalog.less";
+import { filtersSelector, updateEntryType, updateKeyword, updatePage, updateYear } from "../../data/filtersSlice";
 
 function Catalog() {
-    const [searchState, setSearchState] = useState("Pokemon");
-    const [entryType, setEntryType] = useState(EntryType.All);
     const [entries, setEntries] = useState<Entry[]>([]);
-    const [page, setPage] = useState(1);
     const [numOfEntries, setNumOfEntries] = useState(0);
-    const [year, setYear] = useState("");
     const [error, setError] = useState(false);
+    const dispatch = useDispatch();
+    const { keyword, entryType, year, page } = useSelector(filtersSelector);
 
     const numOfPages = useMemo(() => {
-        return Math.floor(numOfEntries / 10) + 1;
+        return Math.ceil(numOfEntries / 10);
     }, [numOfEntries]);
 
     useEffect(() => {
-        const fetchData = async (keyword: string, type: EntryType, page: number, year: string) => {
+        const fetchData = async () => {
             if (!keyword) {
                 return;
             }
             const result = await searchEntries({
                 keyword,
-                type,
+                type: entryType,
                 page: page.toString(),
-                year: year
+                year
             });
 
             if (result.Response === "True") {
@@ -40,46 +40,46 @@ function Catalog() {
                 setError(true);
             }
         };
-        fetchData(searchState, entryType, page, year);
-    }, [entryType, page, searchState, year]);
+        fetchData();
+    }, [entryType, page, keyword, year]);
 
     function handleYearInputChange(value: string) {
         if (value === "") {
-            setYear("");
+            dispatch(updateYear(""));
         }
         const yearNumber = Number(value);
         const currentYear = new Date().getFullYear();
         if (yearNumber > 0 && yearNumber <= currentYear) {
-            setYear(value);
+            dispatch(updateYear(value));
         }
     }
 
     function handleSearchInputChange(value: string) {
-        setSearchState(value);
+        dispatch(updateKeyword(value));
     }
 
     function handleEntryTypeChange(e: ChangeEvent<HTMLSelectElement>) {
-        setEntryType(e.target.value as EntryType);
+        dispatch(updateEntryType(e.target.value as EntryType));
     }
 
     function nextPage() {
-        setPage(page + 1);
+        dispatch(updatePage(page + 1));
     }
 
     function prevPage() {
-        setPage(page - 1);
+        dispatch(updatePage(page - 1));
     }
 
     useEffect(() => {
-        setPage(1);
-    }, [searchState, year, entryType]);
+        dispatch(updatePage(1));
+    }, [keyword, year, entryType, dispatch]);
 
     return (
         <div className="catalog">
             <div className="title">OMDB Database</div>
             <div className="filters">
                 <label>
-                    Name: <DebouncedInput value={searchState} onChange={handleSearchInputChange}/>
+                    Name: <DebouncedInput value={keyword} onChange={handleSearchInputChange}/>
                 </label>
                 <label>
                     Type:&nbsp;
