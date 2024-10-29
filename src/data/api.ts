@@ -1,5 +1,3 @@
-import { pokemonData } from "./fixture";
-
 export interface Entry {
     Poster: string;
     Title: string;
@@ -19,15 +17,27 @@ export interface OkSearchResult {
     Response: "True";
     Search: Entry[];
     totalResults: string;
-    Error?: string;
 }
 
-export interface ErrorSearchResult {
+export interface ErrorResponse {
     Response: "False";
     Error: string;
 }
 
-export type SearchResult = OkSearchResult | ErrorSearchResult;
+export type SearchResult = OkSearchResult | ErrorResponse;
+export type EntryDetailResponse = OkEntryDetailResponse | ErrorResponse;
+
+export interface OkEntryDetailResponse extends Entry {
+    Response: "True";
+    imdbRating: string;
+    imdbVotes: string;
+    Genre: string;
+    Runtime: string;
+    Director: string;
+    Actors: string;
+    BoxOffice: string;
+}
+
 
 export async function searchEntries({
     keyword,
@@ -52,9 +62,18 @@ export async function searchEntries({
         url.searchParams.append("y", year);
     }
     url.searchParams.append("apiKey", import.meta.env.VITE_OMDB_API_KEY);
-    if (keyword === "Pokemon" && type === EntryType.All) {
-        return Promise.resolve(pokemonData);
-    }
+    const result = await fetch(url);
+    return result.json();
+}
+
+export async function getEntryDetail({
+    id
+}: {
+    id: string;
+}): Promise<EntryDetailResponse> {
+    const url = new URL("https://www.omdbapi.com");
+    url.searchParams.append("i", id);
+    url.searchParams.append("apiKey", import.meta.env.VITE_OMDB_API_KEY);
     const result = await fetch(url);
     return result.json();
 }

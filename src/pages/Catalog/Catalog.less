@@ -1,15 +1,37 @@
 .catalog {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1024px;
     padding: var(--spacing-xxl);
+    gap: var(--spacing-s);
+
+    @media screen and (max-width: 1023px) {
+        padding: var(--spacing-s);
+    }
 
     & > .title {
         font-size: 24px;
-        margin-bottom: var(--spacing-m);
+        font-weight: 500;
+        margin-bottom: var(--spacing-s);
     }
 
     .filters {
         display: flex;
         gap: var(--spacing-s);
-        margin-bottom: var(--spacing-m);
+
+        @media screen and (max-width: 1023px) {
+            flex-direction: column;
+        }
+
+        .yearInput {
+            width: 48px;
+        }
+    }
+
+    .pages {
+        display: flex;
+        gap: var(--spacing-s);
     }
 
     .entries {

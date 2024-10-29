@@ -7,7 +7,7 @@ function CatalogEntry({ data }: { data: Entry }) {
     return (
         <Link className="catalogEntry" to={`/${data.imdbID}`}>
             <div className="id">{data.imdbID}</div>
-            <div className="title">{data.Title}</div>
+            <div className="title" title={data.Title}>{data.Title}</div>
             <div className="year">{data.Year}</div>
         </Link>
     );

@@ -31,8 +31,7 @@ function Catalog() {
                 page: page.toString(),
                 year: year
             });
-    
-            console.log(result);
+
             if (result.Response === "True") {
                 setEntries(result.Search);
                 setNumOfEntries(Number(result.totalResults));
@@ -73,11 +72,11 @@ function Catalog() {
 
     useEffect(() => {
         setPage(1);
-    }, [searchState, year]);
+    }, [searchState, year, entryType]);
 
     return (
         <div className="catalog">
-            <div className="title">Catalog</div>
+            <div className="title">OMDB Database</div>
             <div className="filters">
                 <label>
                     Name: <DebouncedInput value={searchState} onChange={handleSearchInputChange}/>
@@ -92,7 +91,7 @@ function Catalog() {
                     </select>
                 </label>
                 <label>
-                    Year: <DebouncedInput value={year} onChange={handleYearInputChange}/>
+                    Year: <DebouncedInput className="yearInput" value={year} onChange={handleYearInputChange}/>
                 </label>
             </div>
             {error ? (
@@ -102,7 +101,7 @@ function Catalog() {
             ) : (
                 <>
                     <div>{numOfEntries} entries found</div>
-                    <div>
+                    <div className="pages">
                         Page {page} of {numOfPages}
                         <button
                             onClick={prevPage}

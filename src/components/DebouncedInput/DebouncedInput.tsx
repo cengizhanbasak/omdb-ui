@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 
 type DebouncedInputProps = {
-  value: string;
-  onChange: (value: string) => void;
-  debounceTime?: number;
-  placeholder?: string;
+    className?: string;
+    value: string;
+    onChange: (value: string) => void;
+    debounceTime?: number;
+    placeholder?: string;
 };
 
 function DebouncedInput({
+    className,
     value,
-    onChange,
     debounceTime = 300,
-    placeholder = "Type here...",
+    placeholder,
+    onChange,
 }: DebouncedInputProps) {
     const [internalValue, setInternalValue] = useState(value);
 
@@ -31,6 +33,7 @@ function DebouncedInput({
     return (
         <input
             type="text"
+            className={className}
             value={internalValue}
             onChange={handleChange}
             placeholder={placeholder}

@@ -1,6 +1,6 @@
 .catalogEntry {
     display: grid;
-    grid-template-columns: 20% 60% 20%;
+    grid-template-columns: 80px 4fr minmax(40px, 1fr);
     gap: var(--spacing-xs);
     padding: var(--spacing-s);
     border-radius: 8px;
@@ -13,18 +13,21 @@
 
     .title {
         font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     
     .id, .year {
-        opacity: 0.5;
+        color: var(--secondary-text-color)
     }
 
     &:nth-child(even) {
-        background-color: rgba(0,0,0,0.5);
+        background-color: var(--table-row-even);
     }
 
     &:nth-child(odd) {
-        background-color: rgba(0,0,0,0.7);
+        background-color: var(--table-row-odd);
     }
 
 }
