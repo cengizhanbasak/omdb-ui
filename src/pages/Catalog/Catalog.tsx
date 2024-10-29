@@ -76,7 +76,7 @@ function Catalog() {
 
     return (
         <div className="catalog">
-            <div className="title">OMDB Database</div>
+            <div className="title">The Open Movie Database</div>
             <div className="filters">
                 <label>
                     Name: <DebouncedInput value={keyword} onChange={handleSearchInputChange}/>
