@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { EntryDetailResponse, getEntryDetail, OkEntryDetailResponse } from "../../data/api";
 
@@ -25,6 +25,7 @@ function Detail() {
 
     return (
         <div className="detail">
+            <Link to="/" className="backLink">← Back to list</Link>
             {error ? (
                 <div>Error</div>
             ) : (

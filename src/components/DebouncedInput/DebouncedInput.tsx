@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 type DebouncedInputProps = {
     className?: string;
@@ -16,13 +16,22 @@ function DebouncedInput({
     onChange,
 }: DebouncedInputProps) {
     const [internalValue, setInternalValue] = useState(value);
+    const lastDebouncedValue = useRef(value);
+
+    useEffect(() => {
+        // Only update internalValue when the value prop changes
+        setInternalValue(value);
+    }, [value]);
 
     useEffect(() => {
         const handler = setTimeout(() => {
-            onChange(internalValue);
+            // Only call onChange if the debounced value has changed
+            if (lastDebouncedValue.current !== internalValue) {
+                onChange(internalValue);
+                lastDebouncedValue.current = internalValue;
+            }
         }, debounceTime);
 
-        // Clear timeout if input changes (during debounce delay)
         return () => clearTimeout(handler);
     }, [internalValue, debounceTime, onChange]);
 

@@ -70,10 +70,6 @@ function Catalog() {
         dispatch(updatePage(page - 1));
     }
 
-    useEffect(() => {
-        dispatch(updatePage(1));
-    }, [keyword, year, entryType, dispatch]);
-
     return (
         <div className="catalog">
             <div className="title">The Open Movie Database</div>

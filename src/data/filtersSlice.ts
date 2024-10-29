@@ -19,12 +19,15 @@ export const filtersSlice = createSlice({
     reducers: {
         updateKeyword(state, action) {
             state.keyword = action.payload;
+            state.page = 1;
         },
         updateYear(state, action) {
             state.year = action.payload;
+            state.page = 1;
         },
         updateEntryType(state, action) {
             state.entryType = action.payload;
+            state.page = 1;
         },
         updatePage(state, action) {
             state.page = action.payload;
