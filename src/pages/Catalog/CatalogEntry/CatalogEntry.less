@@ -1,21 +1,30 @@
 .catalogEntry {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
     gap: var(--spacing-xs);
     padding: var(--spacing-s);
-    width: 200px;
+    border-radius: 8px;
+    color: var(--text-color);
+    text-decoration: none;
 
-    .posterImage {
-        width: 100%;
+    &:hover {
+        opacity: 0.8;
     }
 
     .title {
         font-weight: 500;
     }
-
-    .year {
-        opacity: 0.8;
+    
+    .id, .year {
+        opacity: 0.5;
     }
+
+    &:nth-child(even) {
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    &:nth-child(odd) {
+        background-color: rgba(0,0,0,0.7);
+    }
+
 }

@@ -21,6 +21,10 @@
     --spacing-xxl: 48px
 }
 
+#root {
+    width: 100%;
+}
+
 body {
     margin: 0;
     display: flex;

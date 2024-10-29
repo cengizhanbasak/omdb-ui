@@ -9,6 +9,7 @@ export interface Entry {
 }
 
 export enum EntryType {
+    All = "",
     Movie = "movie",
     Series = "series",
     Episode = "episode"
@@ -40,8 +41,10 @@ export async function searchEntries({
     year?: string;
 }): Promise<SearchResult> {
     const url = new URL("https://www.omdbapi.com");
-    url.searchParams.append("s", keyword);
-    url.searchParams.append("type", type);
+    url.searchParams.append("s", keyword.trim());
+    if (type !== EntryType.All) {
+        url.searchParams.append("type", type);
+    }
     if (page) {
         url.searchParams.append("page", page);
     }
@@ -49,7 +52,7 @@ export async function searchEntries({
         url.searchParams.append("y", year);
     }
     url.searchParams.append("apiKey", import.meta.env.VITE_OMDB_API_KEY);
-    if (keyword === "Pokemon") {
+    if (keyword === "Pokemon" && type === EntryType.All) {
         return Promise.resolve(pokemonData);
     }
     const result = await fetch(url);
